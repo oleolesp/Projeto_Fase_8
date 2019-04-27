@@ -1,8 +1,8 @@
-class Api::V2::GainsController < ApplicationController
-    before_action :authenticate_with_token!
+class Api::V2::GainsController < Api::V2::BaseController
+    before_action :authenticate_user!
     
     def index
-        gains = current_user.gains
+        gains = current_user.gains.ransack(params[:q]).result
         render json: gain, status: 200
     end
     
